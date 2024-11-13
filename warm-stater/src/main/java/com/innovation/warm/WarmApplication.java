@@ -19,5 +19,6 @@ import org.springframework.stereotype.Service;
 public class WarmApplication {
     public static void main(String[] args) {
         SpringApplication.run(WarmApplication.class, args);
+
     }
 }
