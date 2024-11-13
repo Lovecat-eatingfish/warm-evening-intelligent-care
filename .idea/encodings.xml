@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-admin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-admin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-member/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-member/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-merchant-admin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-merchant-admin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-security/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-stater/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-stater/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-support/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/warm-support/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
