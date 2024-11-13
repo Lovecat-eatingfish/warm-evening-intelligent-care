@@ -1,6 +1,9 @@
 spring:
   application:
     name: 暖夕智护
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
   profiles:
     active: dev
 
@@ -9,12 +12,8 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
-# token配置
-token:
-  # 令牌密钥
-  secret: UHa0L2I48zvFJX6QGZ780qCterCWug8J
-  # 令牌有效期（默认30分钟）
-  expireTime: 3600000
+
+
 
 # springdoc配置： https://springdoc.org/properties.html
 springdoc:
@@ -65,3 +64,10 @@ warm:
     notifyUrl: https://58869fb.r2.cpolar.top/notify/paySuccess
     # 退款成功的回调通知 URL，微信支付会在退款成功后向此 URL 发送通知。
     refundNotifyUrl: https://58869fb.r2.cpolar.top/notify/refundSuccess
+  # token配置
+  jwt:
+    # 令牌密钥
+    secret: UHa0L2I48zvFJX6QGZ780qCterCWug8J
+    # 令牌有效期（默认30分钟）
+    expireTime: 3600000
+    tokenKey: Authentication
