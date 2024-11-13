@@ -38,3 +38,30 @@ knife4j:
   production: false # 设置为 true 表示在生产环境中不显示文档，为 false 表示显示文档（通常在开发环境中使用）
   setting:
     language: zh_cn
+
+# 项目配置文件
+warm:
+  # 阿里云oss
+  alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: your-access-key-id
+    access-key-secret: your-access-key-secret
+    bucket-name: your-bucket-name
+  # 微信配置
+  wechat:
+    appid: wx3292df0d354976ed
+    secret: 92c5470a8b53aeba5079dc27d9c7921c
+    # 商户号，微信支付分配的唯一标识
+    mchid:
+    # 商户证书序列号，用于验证商户身份
+    mchSerialNo:
+    #  商户私钥文件路径，用于签名和解密
+    privateKeyFilePath:
+    # 微信支付 V3 API 的密钥，用于签名和验证
+    apiV3Key:
+    #  微信支付证书文件路径，用于 HTTPS 请求的双向认证。
+    weChatPayCertFilePath:
+    # 支付成功的回调通知 URL，微信支付会在支付成功后向此 URL 发送通知。
+    notifyUrl: https://58869fb.r2.cpolar.top/notify/paySuccess
+    # 退款成功的回调通知 URL，微信支付会在退款成功后向此 URL 发送通知。
+    refundNotifyUrl: https://58869fb.r2.cpolar.top/notify/refundSuccess
