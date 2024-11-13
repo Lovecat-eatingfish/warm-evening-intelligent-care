@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: 暖夕智护
+  profiles:
+    active: dev
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# token配置
+token:
+  # 令牌密钥
+  secret: UHa0L2I48zvFJX6QGZ780qCterCWug8J
+  # 令牌有效期（默认30分钟）
+  expireTime: 3600000
+
+# springdoc配置： https://springdoc.org/properties.html
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: alpha
+    tags-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: '暖夕智护'
+      paths-to-match: "/**"
+      packages-to-scan: com.innovation.warm
+  default-flat-param-object: true
+
+# knife4j 接口文档配置
+knife4j:
+  # 是否开启 Knife4j 增强功能
+  enable: true  # 设置为 true 表示开启增强功能
+  # 生产环境配置
+  production: false # 设置为 true 表示在生产环境中不显示文档，为 false 表示显示文档（通常在开发环境中使用）
+  setting:
+    language: zh_cn
