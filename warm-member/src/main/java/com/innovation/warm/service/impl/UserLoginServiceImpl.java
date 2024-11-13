@@ -56,6 +56,7 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
         }
         // TODO 明天写
         return null;
+
     }
 
     private String getOpenId(String code) {
