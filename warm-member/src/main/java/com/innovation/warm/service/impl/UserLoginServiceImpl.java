@@ -4,15 +4,18 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.innovation.warm.constant.RedisConstant;
 import com.innovation.warm.domain.dto.UserLoginDTO;
 import com.innovation.warm.enumeration.ResultCodeEnum;
 import com.innovation.warm.exception.ServiceException;
 import com.innovation.warm.pojo.entity.UserLogin;
+import com.innovation.warm.properties.JwtProperties;
 import com.innovation.warm.properties.WeChatProperties;
 import com.innovation.warm.service.UserLoginService;
 import com.innovation.warm.mapper.UserLoginMapper;
 import com.innovation.warm.util.HttpClientUtil;
 import com.innovation.warm.util.JwtUtil;
+import com.innovation.warm.util.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
 * @author 32782
@@ -33,6 +37,8 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
     implements UserLoginService{
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private JwtProperties jwtProperties;
 
     //微信服务接口地址
     public static final String WX_LOGIN = "https://api.weixin.qq.com/sns/jscode2session";
@@ -41,6 +47,8 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private WeChatProperties weChatProperties;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public String login( UserLoginDTO userLoginDTO) {
@@ -59,8 +67,9 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
             one.setUpdaterId(one.getId());
         }
         // 该用户注册过了  生成token返回
-        return null;
-
+        String token =  jwtUtil.createToken(one);
+        redisUtil.set(RedisConstant.USER_LOGIN_CACHE + one.getId(), one, RedisConstant.EXPIRE_TIME, TimeUnit.MINUTES);
+        return token;
     }
 
     private String getOpenId(String code) {

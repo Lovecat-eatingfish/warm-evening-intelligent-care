@@ -35,4 +35,9 @@ public class ServletUtil {
     public static HttpSession getSession() {
         return getRequest().getSession();
     }
+
+    public static String getToken(String key) {
+        HttpServletRequest request = getRequest();
+        return request.getHeader(key);
+    }
 }
