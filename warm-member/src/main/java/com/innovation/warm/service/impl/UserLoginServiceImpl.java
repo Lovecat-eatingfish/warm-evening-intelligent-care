@@ -12,6 +12,7 @@ import com.innovation.warm.properties.WeChatProperties;
 import com.innovation.warm.service.UserLoginService;
 import com.innovation.warm.mapper.UserLoginMapper;
 import com.innovation.warm.util.HttpClientUtil;
+import com.innovation.warm.util.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +31,8 @@ import java.util.Map;
 @Service
 public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin>
     implements UserLoginService{
+    @Autowired
+    private JwtUtil jwtUtil;
 
     //微信服务接口地址
     public static final String WX_LOGIN = "https://api.weixin.qq.com/sns/jscode2session";
@@ -47,6 +50,7 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
         }
 
         UserLogin one = this.getOne(new LambdaQueryWrapper<UserLogin>().eq(UserLogin::getOpenid, openId));
+        // 该用户没有注册
         if (one == null) {
             one = new UserLogin();
             one.setOpenid(openId);
@@ -54,7 +58,7 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
             one.setCreatorId(one.getId());
             one.setUpdaterId(one.getId());
         }
-        // TODO 明天写
+        // 该用户注册过了  生成token返回
         return null;
 
     }
