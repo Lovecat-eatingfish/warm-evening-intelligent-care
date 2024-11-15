@@ -44,8 +44,6 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
     public static final String WX_LOGIN = "https://api.weixin.qq.com/sns/jscode2session";
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
     private WeChatProperties weChatProperties;
     @Autowired
     private RedisUtil redisUtil;

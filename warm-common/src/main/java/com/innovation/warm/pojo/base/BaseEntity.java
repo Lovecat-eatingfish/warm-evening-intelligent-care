@@ -1,6 +1,7 @@
 package com.innovation.warm.pojo.base;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 /**
@@ -21,4 +22,10 @@ public class BaseEntity extends SuperEntity {
 
     @TableField(value = "updater_id")
     private Long updaterId;
+
+    /**
+     * 逻辑删除标志，0: 未删除, 1: 已删除
+     */
+    @TableLogic
+    private Integer isDeleted;
 }

@@ -70,4 +70,6 @@ warm:
     secret: UHa0L2I48zvFJX6QGZ780qCterCWug8J
     # 令牌有效期（默认30分钟）
     expireTime: 3600000
-    tokenKey: Authentication
+    memberTokenKey: mem-Authentication
+    adminTokenKey: admin-Authentication
+    merchantTokenKey: merchant-Authentication
