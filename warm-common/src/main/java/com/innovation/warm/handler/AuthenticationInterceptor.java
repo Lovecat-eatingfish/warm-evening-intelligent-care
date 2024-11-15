@@ -33,7 +33,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     private JwtUtil jwtUtil;
     @Override
     public  boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = ServletUtil.getToken(jwtProperties.getTokenKey());
+        String token = ServletUtil.getToken(jwtProperties.getMemberTokenKey());
         if (StringUtils.isNotBlank(token)) {
             Claims claims = jwtUtil.parseToken(token);
         }

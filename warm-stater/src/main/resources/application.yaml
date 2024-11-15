@@ -48,8 +48,8 @@ warm:
     bucket-name: your-bucket-name
   # 微信配置
   wechat:
-    appid:
-    secret:
+    appid: ${warm.wechat.appid}
+    secret: ${warm.jwt.secret}
     # 商户号，微信支付分配的唯一标识
     mchid:
     # 商户证书序列号，用于验证商户身份

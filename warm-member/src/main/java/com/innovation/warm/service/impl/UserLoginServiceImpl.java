@@ -54,7 +54,6 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
         if (StringUtils.isEmpty(openId)) {
             throw new ServiceException(ResultCodeEnum.LOGIN_FAILED);
         }
-
         UserLogin one = this.getOne(new LambdaQueryWrapper<UserLogin>().eq(UserLogin::getOpenid, openId));
         // 该用户没有注册
         if (one == null) {
@@ -66,6 +65,7 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
         }
         // 该用户注册过了  生成token返回
         String token =  jwtUtil.createToken(one);
+        // 把用户信息存储到redis中  可以实现剔除下线功能
         redisUtil.set(RedisConstant.USER_LOGIN_CACHE + one.getId(), one, RedisConstant.EXPIRE_TIME, TimeUnit.MINUTES);
         return token;
     }

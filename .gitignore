@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# yaml的配置文件 对 微信的
+application.properties
