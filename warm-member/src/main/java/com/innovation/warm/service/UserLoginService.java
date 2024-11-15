@@ -13,4 +13,5 @@ public interface UserLoginService extends IService<UserLogin> {
 
     String login(UserLoginDTO userLoginDTO);
 
+    void updateUserInfo(UserLoginDTO userLoginDTO);
 }

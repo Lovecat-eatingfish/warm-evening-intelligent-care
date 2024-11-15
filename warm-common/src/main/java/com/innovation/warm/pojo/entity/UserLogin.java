@@ -50,6 +50,11 @@ public class UserLogin extends BaseEntity {
     private Integer status;
 
 
+    /**
+     * 记录登录时间 作用 刷新token用
+     */
+    @TableField(exist = false)
+    private Long loginTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -39,6 +39,8 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
     private JwtUtil jwtUtil;
     @Autowired
     private JwtProperties jwtProperties;
+    @Autowired
+    private UserLoginMapper userLoginMapper;
 
     //微信服务接口地址
     public static final String WX_LOGIN = "https://api.weixin.qq.com/sns/jscode2session";
@@ -63,11 +65,17 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
             one.setCreatorId(one.getId());
             one.setUpdaterId(one.getId());
         }
-        // 该用户注册过了  生成token返回
-        String token =  jwtUtil.createToken(one);
-        // 把用户信息存储到redis中  可以实现剔除下线功能
-        redisUtil.set(RedisConstant.USER_LOGIN_CACHE + one.getId(), one, RedisConstant.EXPIRE_TIME, TimeUnit.MINUTES);
-        return token;
+        // 该用户注册过了 / 登录过了返回token  且把用户信息存入到redis 中 key是 前缀 + 用户的 唯一标识id  可以用来实现剔除下线功能
+        // token里面 加密的内容是用户的id
+        return jwtUtil.createToken(one);
+    }
+
+    @Override
+    public void updateUserInfo(UserLoginDTO userLoginDTO) {
+        userLoginMapper.updateUserInfo(userLoginDTO);
+        UserLogin userLogin = this.getById(userLoginDTO.getId());
+        // 修改redis的登录用户数据
+        redisUtil.set(RedisConstant.USER_LOGIN_CACHE + userLogin.getId(), userLogin, RedisConstant.EXPIRE_TIME, TimeUnit.MINUTES);
     }
 
     private String getOpenId(String code) {

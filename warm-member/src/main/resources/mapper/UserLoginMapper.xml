@@ -25,4 +25,22 @@
         status,is_deleted,create_time,
         update_time,creator_id,updater_id
     </sql>
+    <update id="updateUserInfo">
+        update user_login
+        <set>
+            <if test="userLoginDTO.nickname != null">
+                nickname = #{userLoginDTO.nickname},
+            </if>
+            <if test="userLoginDTO.phone != null">
+                phone = #{userLoginDTO.phone},
+            </if>
+            <if test="userLoginDTO.gender">
+                gender = #{userLoginDTO.gender},
+            </if>
+            <if test="userLoginDTO.avatar != null">
+                avatar = #{userLoginDTO.avatar},
+            </if>
+        </set>
+        where id = #{userLoginDTO.id}
+    </update>
 </mapper>

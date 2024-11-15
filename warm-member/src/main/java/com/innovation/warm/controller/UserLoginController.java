@@ -4,6 +4,8 @@ import com.innovation.warm.domain.dto.UserLoginDTO;
 import com.innovation.warm.pojo.entity.UserLogin;
 import com.innovation.warm.response.Result;
 import com.innovation.warm.service.UserLoginService;
+import com.innovation.warm.util.LoginUserHolder;
+import com.innovation.warm.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserLoginController {
     @Autowired
     private UserLoginService userLoginService;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @PostMapping("/login")
     public Result login(@RequestBody UserLoginDTO userLogin) {
@@ -33,6 +37,20 @@ public class UserLoginController {
     }
     @GetMapping("/info")
     public Result getUserInfo() {
-        return null;
+        UserLogin loginUser = LoginUserHolder.getLoginUser();
+        return Result.success(loginUser);
+    }
+
+    // TODO 注意修改用户信息的时候  修改redis的信息 应为ThreadLocal的信息使用redis中取出来的
+    @PutMapping("/info")
+    public Result updateUserInfo(@RequestBody UserLoginDTO userLoginDTO) {
+        userLoginService.updateUserInfo(userLoginDTO);
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    public Result getUserInfo(@PathVariable("id") Long id) {
+        UserLogin userLogin = userLoginService.getById(id);
+        return  Result.success(userLogin);
     }
 }
