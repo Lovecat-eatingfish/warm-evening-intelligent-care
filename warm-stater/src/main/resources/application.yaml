@@ -48,8 +48,8 @@ warm:
     bucket-name: your-bucket-name
   # 微信配置
   wechat:
-    appid: wx3292df0d354976ed
-    secret: 92c5470a8b53aeba5079dc27d9c7921c
+    appid:
+    secret:
     # 商户号，微信支付分配的唯一标识
     mchid:
     # 商户证书序列号，用于验证商户身份
