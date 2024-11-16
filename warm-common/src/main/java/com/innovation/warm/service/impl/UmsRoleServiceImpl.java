@@ -1,9 +1,9 @@
 package com.innovation.warm.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.innovation.warm.domain.UmsRole;
-import com.innovation.warm.service.UmsRoleService;
+import com.innovation.warm.pojo.entity.UmsRole;
 import com.innovation.warm.mapper.UmsRoleMapper;
+import com.innovation.warm.service.UmsRoleService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class UmsRoleServiceImpl extends ServiceImpl<UmsRoleMapper, UmsRole>
-    implements UmsRoleService{
+    implements UmsRoleService {
 
 }
 

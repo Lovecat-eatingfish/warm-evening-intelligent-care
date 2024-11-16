@@ -1,6 +1,7 @@
 package com.innovation.warm.service;
 
-import com.innovation.warm.domain.dto.SysUserLoginDTO;
+
+import com.innovation.warm.pojo.dto.SysUserLoginDTO;
 import com.innovation.warm.pojo.entity.UmsSysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UmsSysUserService extends IService<UmsSysUser> {
 
     String login(SysUserLoginDTO userLoginDTO);
+
+
 }

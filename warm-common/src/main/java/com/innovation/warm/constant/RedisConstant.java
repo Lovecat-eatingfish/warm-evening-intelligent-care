@@ -12,6 +12,7 @@ package com.innovation.warm.constant;
 // 小程序端的redis key前缀是 member_user
 public class RedisConstant {
     // 小程序用户登录 的redis数据缓存的key前缀
-    public static final String USER_LOGIN_CACHE = "member_user:login_cache";
+    public static final String MEMBER_USER_LOGIN_CACHE = "member_user:login_cache";
+    public static final String SYSUSER_LOGIN_CACHE = "sys_user:login_cache";
     public static final Integer EXPIRE_TIME = 30;
 }

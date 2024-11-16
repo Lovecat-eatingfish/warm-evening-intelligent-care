@@ -44,6 +44,7 @@
         <jwtt.version>0.9.1</jwtt.version>
         <httpclient.version>4.5.13</httpclient.version>
         <fastjson2.version>2.0.47</fastjson2.version>
+        <jakarta-xml.version>2.3.1</jakarta-xml.version>
     </properties>
     <dependencyManagement>
         <dependencies>

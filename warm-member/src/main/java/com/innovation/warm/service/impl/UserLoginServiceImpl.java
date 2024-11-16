@@ -14,14 +14,11 @@ import com.innovation.warm.properties.WeChatProperties;
 import com.innovation.warm.service.UserLoginService;
 import com.innovation.warm.mapper.UserLoginMapper;
 import com.innovation.warm.util.HttpClientUtil;
-import com.innovation.warm.util.JwtUtil;
+import com.innovation.warm.util.jwt.JwtMemberUtil;
 import com.innovation.warm.util.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin>
     implements UserLoginService{
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtMemberUtil jwtUtil;
     @Autowired
     private JwtProperties jwtProperties;
     @Autowired
@@ -75,7 +72,7 @@ public class UserLoginServiceImpl extends ServiceImpl<UserLoginMapper, UserLogin
         userLoginMapper.updateUserInfo(userLoginDTO);
         UserLogin userLogin = this.getById(userLoginDTO.getId());
         // 修改redis的登录用户数据
-        redisUtil.set(RedisConstant.USER_LOGIN_CACHE + userLogin.getId(), userLogin, RedisConstant.EXPIRE_TIME, TimeUnit.MINUTES);
+        redisUtil.set(RedisConstant.MEMBER_USER_LOGIN_CACHE + userLogin.getId(), userLogin, RedisConstant.EXPIRE_TIME, TimeUnit.MINUTES);
     }
 
     private String getOpenId(String code) {

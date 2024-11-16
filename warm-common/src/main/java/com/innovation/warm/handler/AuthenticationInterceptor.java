@@ -1,12 +1,12 @@
 package com.innovation.warm.handler;
 
+import com.innovation.warm.enumeration.ResultCodeEnum;
+import com.innovation.warm.exception.ServiceException;
 import com.innovation.warm.properties.JwtProperties;
-import com.innovation.warm.util.JwtUtil;
+import com.innovation.warm.util.jwt.JwtMemberUtil;
 import com.innovation.warm.util.LoginUserHolder;
-import com.innovation.warm.util.ResponseUtil;
 import com.innovation.warm.util.ServletUtil;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * ClassName: AuthenticationInterceptor
@@ -30,13 +29,15 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     @Autowired
     private JwtProperties jwtProperties;
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtMemberUtil jwtUtil;
+
     @Override
-    public  boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = ServletUtil.getToken(jwtProperties.getMemberTokenKey());
-        if (StringUtils.isNotBlank(token)) {
-            Claims claims = jwtUtil.parseToken(token);
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String token = ServletUtil.getToken(jwtProperties.getHeadTokenKey());
+        if (StringUtils.isEmpty(token)) {
+            throw new ServiceException(ResultCodeEnum.ADMIN_LOGIN_AUTH);
         }
+        Claims claims = jwtUtil.parseToken(token);
         return true;
     }
 

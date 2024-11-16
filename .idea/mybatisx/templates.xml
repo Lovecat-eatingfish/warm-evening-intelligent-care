@@ -63,13 +63,13 @@
             </option>
             <option name="needsComment" value="true" />
             <option name="needsModel" value="true" />
-            <option name="relativePackage" value="domain" />
+            <option name="relativePackage" value="pojo.entity" />
             <option name="superClass" value="com.innovation.warm.pojo.base.BaseEntity" />
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="UmsRole" />
-                  <option name="tableName" value="ums_role" />
+                  <option name="className" value="UmsMenu" />
+                  <option name="tableName" value="ums_menu" />
                 </TableUIInfo>
               </list>
             </option>

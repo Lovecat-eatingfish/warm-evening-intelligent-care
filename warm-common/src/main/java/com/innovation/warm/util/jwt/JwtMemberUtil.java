@@ -1,18 +1,18 @@
-package com.innovation.warm.util;
+package com.innovation.warm.util.jwt;
 
 import com.innovation.warm.constant.RedisConstant;
 import com.innovation.warm.enumeration.ResultCodeEnum;
 import com.innovation.warm.exception.ServiceException;
 import com.innovation.warm.pojo.entity.UserLogin;
 import com.innovation.warm.properties.JwtProperties;
+import com.innovation.warm.util.LoginUserHolder;
+import com.innovation.warm.util.RedisUtil;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,8 +24,10 @@ import java.util.concurrent.TimeUnit;
  * @Date: 2024/11/14 下午5:30
  * @Version: 1.0
  */
+// 给为微信小程序那边用的 jwt 工具类
+// 另外零个登录的 jwt里面 和 小程序用户的不一样 所以 单独出来
 @Component
-public class JwtUtil {
+public class JwtMemberUtil {
     @Autowired
     private JwtProperties jwtProperties;
     @Autowired
@@ -48,7 +50,7 @@ public class JwtUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userLogin.getId());
         // 吧用户信息放入到redis中
-        refresh(userLogin);
+        refreshToken(userLogin);
         return Jwts.builder()
                 .setSubject("MEMBER_LOGIN_USER")
                 .setClaims(claims)
@@ -63,9 +65,6 @@ public class JwtUtil {
      * @return
      */
     public Claims parseToken(String token) {
-        if (token == null) {
-            throw new ServiceException(ResultCodeEnum.ADMIN_LOGIN_AUTH);
-        }
         try {
             JwtParser jwtParser = Jwts.parser()
                     .setSigningKey(jwtProperties.getSecret());
@@ -73,7 +72,8 @@ public class JwtUtil {
             Claims body = headerClaimsJwt.getBody();
             Long userId = body.get("userId", Long.class);
             // 用用户的id 作为redis的key 可以实现 剔除登录的用户的功能
-            UserLogin user = (UserLogin) redisUtil.get(RedisConstant.USER_LOGIN_CACHE + userId);
+            UserLogin user = (UserLogin) redisUtil.get(RedisConstant.MEMBER_USER_LOGIN_CACHE + userId);
+            //  作用：1 踢人下线功能  2： 充当jwt的 过期时间 =====》 解决jwt 的过期时间 定死的问题 无法强制用户下线的问题
             if (user == null) {
                 throw new ServiceException(ResultCodeEnum.LOGIN_FAILED);
             }
@@ -83,7 +83,7 @@ public class JwtUtil {
             long millis = currentTimeMillis / 1000 / 60 - loginTime / 1000 / 60;
             if (millis >= 20) {
                 user.setLoginTime(currentTimeMillis);
-                refresh(user);
+                refreshToken(user);
             }
             // 把用户信息存入到ThreadLocal中
             LoginUserHolder.setLoginUser(user);
@@ -98,11 +98,11 @@ public class JwtUtil {
     /**
      * 刷新token的条件
      */
-    public <T> void refresh(T t) {
+    public <T> void refreshToken(T t) {
         UserLogin userLogin = null;
         if (t instanceof UserLogin) {
             userLogin = (UserLogin) t;
-            redisUtil.set(RedisConstant.USER_LOGIN_CACHE + userLogin.getId(), userLogin, RedisConstant.EXPIRE_TIME, TimeUnit.MINUTES);
+            redisUtil.set(RedisConstant.MEMBER_USER_LOGIN_CACHE + userLogin.getId(), userLogin, RedisConstant.EXPIRE_TIME, TimeUnit.MINUTES);
         }
     }
 }

@@ -26,7 +26,8 @@ public class SuperEntity implements Serializable {
     private LocalDateTime createTime;
 
 
-    @TableField(value = "update_time", fill = FieldFill.UPDATE)
+    // 更新字段 再添加和修改的时候都会区 更新数据
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 }

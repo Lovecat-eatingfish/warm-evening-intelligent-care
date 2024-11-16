@@ -67,9 +67,7 @@ warm:
   # token配置
   jwt:
     # 令牌密钥
-    secret: ${warm.jwt.secret}
+    secret: ${warm.jwt.propersecret}
     # 令牌有效期（默认30分钟）
     expireTime: 3600000
-    memberTokenKey: mem-Authentication
-    adminTokenKey: admin-Authentication
-    merchantTokenKey: merchant-Authentication
+    headTokenKey: Authorization

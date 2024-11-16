@@ -21,10 +21,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private AuthenticationInterceptor authenticationInterceptor;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authenticationInterceptor).excludePathPatterns("/member/user/login");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(authenticationInterceptor).excludePathPatterns("/member/user/login");
+//    }
 
 
     @Override

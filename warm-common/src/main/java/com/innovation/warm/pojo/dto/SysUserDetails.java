@@ -1,13 +1,14 @@
 package com.innovation.warm.pojo.dto;
 
 import cn.hutool.core.util.ObjectUtil;
+
 import com.innovation.warm.pojo.entity.UmsSysUser;
-import jakarta.annotation.sql.DataSourceDefinitions;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +24,18 @@ import java.util.stream.Collectors;
  */
 @Data
 public class SysUserDetails implements UserDetails {
-    private Long id;
-    private String token;
+    // 用户的id
+    private Long sysUserId;
     private Long loginTime;
-    private final UmsSysUser sysUser = new UmsSysUser();
+    private UmsSysUser sysUser = new UmsSysUser();
+
+    public SysUserDetails() {
+
+    }
+    public SysUserDetails(UmsSysUser sysUser){
+        this.sysUserId = sysUser.getId();
+        this.sysUser = sysUser;
+    }
     /**
      * 用户的权限
      * @return
@@ -38,7 +47,8 @@ public class SysUserDetails implements UserDetails {
         if(ObjectUtil.isNotEmpty(perms)) {
             return perms.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         }
-        return null;
+        // 返回一个空集合
+        return new ArrayList<>();
     }
 
     @Override

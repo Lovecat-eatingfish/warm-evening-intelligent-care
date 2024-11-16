@@ -1,23 +1,24 @@
 package com.innovation.warm.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.innovation.warm.domain.UmsRole;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.innovation.warm.pojo.base.BaseEntity;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 后台用户表
+ *
+ * @author 32782
  * @TableName ums_sys_user
  */
-@TableName(value ="ums_sys_user")
+@TableName(value = "ums_sys_user")
 @Data
-public class UmsSysUser extends BaseEntity {
+public class UmsSysUser implements Serializable {
     /**
      * 用户ID
      */
@@ -69,9 +70,19 @@ public class UmsSysUser extends BaseEntity {
      */
     private String remark;
 
-    /**
-     * 
-     */
+    private String creatorId;
+    private String updaterId;
+
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
+
+
+    // 更新字段 再添加和修改的时候都会区 更新数据
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime;
+
     private Integer isDeleted;
 
     @TableField(exist = false)

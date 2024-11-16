@@ -1,4 +1,4 @@
-package com.innovation.warm.domain.dto;
+package com.innovation.warm.pojo.dto;
 
 import lombok.Data;
 
@@ -15,4 +15,5 @@ import lombok.Data;
 public class SysUserLoginDTO {
     private String username;
     private String password;
+    private Integer rememberMe;
 }

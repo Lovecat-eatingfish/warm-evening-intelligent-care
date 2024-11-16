@@ -71,6 +71,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+<!--        这有可能是因为SpringBoot项目结合jwt进行登录时出现的问题，因为jdk版本太高导致的-->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
 
     </dependencies>
 

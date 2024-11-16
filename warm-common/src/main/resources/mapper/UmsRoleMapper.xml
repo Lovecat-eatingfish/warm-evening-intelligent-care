@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.innovation.warm.mapper.UmsRoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.innovation.warm.pojo.entity.UmsRole">
+        <id property="roleId" column="role_id" jdbcType="BIGINT"/>
+        <result property="roleLabel" column="role_label" jdbcType="VARCHAR"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="creatorId" column="creator_id" jdbcType="VARCHAR"/>
+        <result property="updaterId" column="updater_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        role_id,role_label,role_name,
+        sort,status,is_deleted,
+        remark,creator_id,updater_id,
+        create_time,update_time
+    </sql>
+    <select id="getRolesById" resultType="com.innovation.warm.pojo.entity.UmsRole">
+        select r.role_id,
+               r.role_label,
+               r.role_name,
+               r.sort,
+               r.status,
+               r.is_deleted,
+               r.remark,
+               r.creator_id,
+               r.updater_id,
+               r.create_time,
+               r.update_time
+        from ums_role r
+                 left join ums_sys_user_role ur on ur.role_id = r.role_id
+        where r.is_deleted = 0 and  ur.user_id = #{sysUserId}
+    </select>
+</mapper>

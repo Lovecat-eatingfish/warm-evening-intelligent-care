@@ -1,7 +1,9 @@
 package com.innovation.warm.service;
 
-import com.innovation.warm.domain.UmsRole;
+import com.innovation.warm.pojo.entity.UmsRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
 * @author 32782
@@ -9,5 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2024-11-14 23:15:28
 */
 public interface UmsRoleService extends IService<UmsRole> {
+
 
 }

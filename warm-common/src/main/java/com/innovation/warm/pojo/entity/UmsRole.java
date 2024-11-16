@@ -1,11 +1,11 @@
-package com.innovation.warm.domain;
+package com.innovation.warm.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.innovation.warm.pojo.base.BaseEntity;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 /**
@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @TableName(value ="ums_role")
 @Data
-public class UmsRole extends BaseEntity implements Serializable {
+public class UmsRole  implements Serializable {
     /**
      * 角色id
      */
@@ -50,6 +50,20 @@ public class UmsRole extends BaseEntity implements Serializable {
      * 备注
      */
     private String remark;
+
+    private String creatorId;
+    private String updaterId;
+
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
+
+
+    // 更新字段 再添加和修改的时候都会区 更新数据
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime;
+
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
