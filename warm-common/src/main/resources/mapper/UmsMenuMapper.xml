@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.innovation.warm.mapper.UmsMenuMapper">
+
+    <resultMap id="BaseResultMap" type="com.innovation.warm.pojo.entity.UmsMenu">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+            <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+            <result property="sort" column="sort" jdbcType="INTEGER"/>
+            <result property="menuType" column="menu_type" jdbcType="INTEGER"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="componentPath" column="component_path" jdbcType="VARCHAR"/>
+            <result property="perms" column="perms" jdbcType="VARCHAR"/>
+            <result property="icon" column="icon" jdbcType="VARCHAR"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="creatorId" column="creator_id" jdbcType="VARCHAR"/>
+            <result property="updaterId" column="updater_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,parent_id,menu_name,
+        sort,menu_type,path,
+        component_path,perms,icon,
+        is_deleted,status,creator_id,
+        updater_id,create_time,update_time
+    </sql>
+    <select id="getMenusByRoleIds" resultType="com.innovation.warm.pojo.entity.UmsMenu">
+        select m.id,
+               m.parent_id,
+               m.menu_name,
+               m.sort,
+               m.menu_type,
+               m.path,
+               m.component_path,
+               m.perms,
+               m.icon,
+               m.is_deleted,
+               m.status,
+               m.creator_id,
+               m.updater_id,
+               m.create_time,
+               m.update_time
+        from ums_menu m
+                 left join ums_role_menu rm on rm.menu_id = m.id
+        where m.is_deleted = 0
+          and rm.role_id in
+        <foreach collection="roleIds" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
+</mapper>
